@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  title: FullApi
+  description: |
+    1) Get all products
+    2) Get all categories
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /products:
+      get:
+        description: List all products
+        operationId: get_all_products
+        responses:
+          "200":
+            content:
+              application/json:
+                schema:
+                  items:
+                    $ref: '#/components/schemas/Product'
+                  type: array
+            description: A array of products
+          default:
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+            description: Unexpected error
+        summary: List products
+        tags:
+        - products
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        product_id:
+          type: integer
+          example: 1
+        product_name:
+          type: string
+          example: Tea
+        supplier_id:
+          type: integer
+          example: 5
+        category_id:
+          type: integer
+          example: 8
+        quantity_per_unit:
+          type: string
+          example: 10 grams
+        unit_price:
+          type: number
+          example: 10.5
+        units_in_stock:
+          type: integer
+          example: 10
+        units_on_order:
+          type: integer
+          example: 5
+        reorder_level:
+          type: integer
+          example: 1
+        discontinued:
+          type: boolean
+          example: False
+    Error:
+      type: object
+      properties:
+        code:
+          format: int32
+          title: code
+          type: integer
+        message:
+          title: message
+          type: string
+      required:
+        - code
+        - message
