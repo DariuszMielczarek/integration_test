@@ -17,7 +17,7 @@ class Repository:
         return products
 
     def get_all_categories(self):
-        statement = select(Category).order_by(Category.category_id)
         with Session(self.engine) as session:
-            result = session.execute(statement)
-        return result.scalars()
+            categories = session.query(Category).all()
+        print(categories)
+        return categories

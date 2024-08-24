@@ -6,7 +6,10 @@ info:
     2) Get all categories
   version: 1.0.0
 servers:
-  - url: 'https'
+  - description: Server
+    url: http://192.168.30.36:8080/
+  - description: Local
+    url: http://localhost:8080/
 paths:
   /products:
       get:
@@ -30,6 +33,28 @@ paths:
         summary: List products
         tags:
         - products
+  /categories:
+    get:
+      description: List all categories
+      operationId: get_all_categories
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Category'
+                type: array
+          description: A array of categories
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: List categories
+      tags:
+        - categories
 components:
   schemas:
     Product:
@@ -65,6 +90,18 @@ components:
         discontinued:
           type: boolean
           example: False
+    Category:
+      type: object
+      properties:
+        category_id:
+          type: integer
+          example: 1
+        category_name:
+          type: string
+          example: Beverage
+        description:
+          type: string
+          example: All the beverages
     Error:
       type: object
       properties:
