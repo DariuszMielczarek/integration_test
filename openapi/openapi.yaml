@@ -1,44 +1,78 @@
 openapi: 3.0.3
 info:
   title: FullApi
-  description: |
-    1) Get all products
+  description: '1) Get all products
+
     2) Get all categories
+
+    '
   version: 1.0.0
 servers:
-  - description: Server
-    url: http://192.168.30.36:8080/
-  - description: Local
-    url: http://localhost:8080/
+- description: Server
+  url: http://192.168.30.36:8080/
+- description: Local
+  url: http://localhost:8080/
 paths:
   /products:
-      get:
-        description: List all products
-        operationId: get_all_products
-        responses:
-          "200":
-            content:
-              application/json:
-                schema:
-                  items:
-                    $ref: '#/components/schemas/Product'
-                  type: array
-            description: A array of products
-          default:
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
-            description: Unexpected error
-        summary: List products
-        tags:
-        - products
+    get:
+      description: List all products
+      operationId: get_all_products
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Product'
+                type: array
+          description: A array of products
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: List products
+      tags:
+      - products
+  /products/{product_name}:
+    put:
+      description: Update product
+      operationId: update_product
+      parameters:
+        - description: Name of product to update
+          in: path
+          name: product_name
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductUpdateData'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: Updated product
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update product
+      tags:
+      - products
   /categories:
     get:
       description: List all categories
       operationId: get_all_categories
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
@@ -54,7 +88,7 @@ paths:
           description: Unexpected error
       summary: List categories
       tags:
-        - categories
+      - categories
 components:
   schemas:
     Product:
@@ -89,7 +123,26 @@ components:
           example: 1
         discontinued:
           type: boolean
-          example: False
+          example: false
+    ProductUpdateData:
+      type: object
+      properties:
+        product_name:
+          type: string
+          example: Coffea
+          nullable: true
+        category:
+          type: string
+          example: Beverage
+          nullable: true
+        units_in_stock:
+          type: integer
+          example: 100
+          nullable: true
+        price:
+          type: number
+          example: 5.55
+          nullable: true
     Category:
       type: object
       properties:
@@ -113,5 +166,5 @@ components:
           title: message
           type: string
       required:
-        - code
-        - message
+      - code
+      - message

@@ -2,9 +2,7 @@ import json
 import inflection
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-
-from models import Category, Product
-from repository import Base
+from models import Category, Product, Base
 
 DATABASE_URL = 'postgresql+psycopg2://postgres:12345@localhost/fast_api_magasin'
 

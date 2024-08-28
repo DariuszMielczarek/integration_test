@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, Boolean, Double, String, ForeignKey
 from sqlalchemy.orm import relationship, declarative_base
@@ -61,3 +63,18 @@ class CategoryBase(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ProductUpdateDataDTO(BaseModel):
+    product_name: str | None = None
+    category_name: str | None = None
+    units_in_stock: int | None = None
+    unit_price: float | None = None
+
+
+@dataclass
+class ProductUpdateData:
+    product_name: str | None = None
+    category_id: int | None = None
+    units_in_stock: int | None = None
+    unit_price: float | None = None
